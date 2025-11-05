@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Items | EcoServe</title>
+  <script src="config.js"></script>
+  <script src="api.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+  :root {
+  --bg: #000000;            /* black background */
+  --primary: #0a0a0a;       /* dark grayish black for sections */
+  --accent: #00ffff;        /* neon cyan */
+  --text: #e0e0e0;          /* light gray text */
+  --subtext: #9c9c9c;       /* muted gray */
+  --hover: #00ff9c;         /* neon green hover */
+  --highlight: #ff003c;     /* bright red button */
+  --purple: #9d00ff;        /* neon purple accent */
+}
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-top: 70px;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--accent);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent);
+}
+
+.nav-links a {
+  color: var(--text);
+  text-decoration: none;
+  margin: 0 1rem;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--hover);
+  text-shadow: 0 0 8px var(--hover);
+}
+
+/* Buttons */
+.btn {
+  background-color: var(--highlight);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: 0.3s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 0, 60, 0.5);
+}
+
+.btn:hover {
+  background-color: #d90034;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 0, 60, 0.8);
+}
+
+/* Browse Section */
+.browse-section {
+  padding: 60px 10%;
+  text-align: center;
+}
+
+.browse-section h2 {
+  font-size: 2rem;
+  color: var(--purple);
+  margin-bottom: 2rem;
+  text-shadow: 0 0 12px rgba(157, 0, 255, 0.6);
+}
+
+/* Items Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.item-card {
+  background-color: #0f0f0f;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 10px rgba(0,255,156,0.15);
+}
+
+.item-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0,255,156,0.5);
+  border-color: var(--hover);
+}
+
+.item-card h3 {
+  margin-bottom: 10px;
+  color: var(--hover);
+  text-shadow: 0 0 6px rgba(0,255,156,0.4);
+}
+
+.item-card p {
+  margin-bottom: 15px;
+  color: var(--subtext);
+}
+
+.item-card button {
+  background-color: var(--accent);
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.item-card button:hover {
+  background-color: var(--hover);
+  transform: scale(1.05);
+}
+
+/* Cart Sidebar */
+.cart {
+  position: fixed;
+  right: -350px;
+  top: 0;
+  height: 100%;
+  width: 350px;
+  background-color: #111;
+  color: var(--text);
+  padding: 20px;
+  transition: 0.4s ease;
+  z-index: 200;
+  overflow-y: auto;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: -5px 0 25px rgba(0, 255, 255, 0.2);
+  border-left: 2px solid var(--accent);
+}
+
+.cart.open {
+  right: 0;
+}
+
+.cart h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 10px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.remove-btn:hover {
+  color: var(--highlight);
+  transform: scale(1.2);
+}
+
+.cart-total {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: var(--hover);
+  text-shadow: 0 0 6px rgba(0,255,156,0.5);
+}
+
+/* Close Cart */
+.close-cart {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 1.3rem;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-cart:hover {
+  color: var(--highlight);
+}
+
+/* Confirm Button */
+.confirm-btn {
+  display: block;
+  margin: 20px auto 10px;
+  background-color: var(--highlight);
+  color: #fff;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255,0,60,0.5);
+}
+
+.confirm-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255,0,60,0.8);
+  background-color: #d90034;
+}
+.item-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: transform 0.3s;
+}
+
+.item-card:hover img {
+  transform: scale(1.05);
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">EcoServe<span>.</span></div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <button class="btn" id="cartBtn">♻️ Items</button>
+    </nav>
+  </header>
+
+  <!-- Browse Section -->
+  <section class="browse-section">
+    <h2>Select Items to Recycle</h2>
+    <div class="grid">
+      <div class="item-card">
+        <img src="notebook.jpg" alt="Notebooks">
+        <h3>Notebooks</h3><p>₹2</p> <button class="add-to-cart" data-name="Notebooks" data-price="12">Add</button></div>
+      <div class="item-card">
+        <img src="paper_bag.jpg" alt="bag">
+        <h3>Paper Bags</h3><p>₹.50</p><button class="add-to-cart" data-name="Paper Bags" data-price="5">Add</button></div>
+      <div class="item-card">
+        <img src="cardboard.jpg" alt="cardboar">
+        <h3>Cardboard Boxes</h3><p>₹0.8</p><button class="add-to-cart" data-name="Cardboard Boxes" data-price="8">Add</button></div>
+      <div class="item-card">
+        <img src="pens.jpg" alt="Notebooks">
+        <h3>Empty Pens</h3><p>₹0.5</p><button class="add-to-cart" data-name="Empty Pens" data-price="2">Add</button></div>
+      <div class="item-card">
+        <img src="tubes.jpg" alt="Notebooks">
+        <h3>Empty Tubes</h3><p>₹0.6</p><button class="add-to-cart" data-name="Empty Tubes" data-price="6">Add</button></div>
+      <div class="item-card">
+        <img src="bottles.jpg" alt="Notebooks">
+        <h3>Water Bottles</h3><p>₹5</p><button class="add-to-cart" data-name="Water Bottles" data-price="10">Add</button></div>
+      <div class="item-card">
+        <img src="shampoo.jpg" alt="Notebooks">
+        <h3>Shampoo Bottles</h3><p>₹7</p><button class="add-to-cart" data-name="Shampoo Bottles" data-price="8">Add</button></div>
+      <div class="item-card">
+        <img src="wrapper.jpg" alt="Notebooks">
+        <h3>Plastic Wrappers</h3><p>₹0.2</p><button class="add-to-cart" data-name="Plastic Wrappers" data-price="3">Add</button></div>
+      <div class="item-card">
+        <img src="ewaste.jpg" alt="Notebooks">
+        <h3>E-Waste</h3><p>₹10</p><button class="add-to-cart" data-name="E-Waste" data-price="20">Add</button></div>
+      <div class="item-card">
+        <img src="cans.jpg" alt="Notebooks">
+        <h3>Aluminum Cans</h3><p>₹3</p><button class="add-to-cart" data-name="Aluminum Cans" data-price="7">Add</button></div>
+      <div class="item-card">
+        <img src="sachets.jpg" alt="Notebooks">
+        <h3>Empty Sachets</h3><p>₹0.5</p><button class="add-to-cart" data-name="Sachets" data-price="7">Add</button></div>
+    </div>
+  </section>
+
+  <!-- Cart Sidebar -->
+  <div class="cart" id="cart">
+    <button class="close-cart" id="closeCart">✖</button>
+    <h2>Your Items</h2>
+    <div id="cart-items"></div>
+    <div class="cart-total" id="cart-total">Total: ₹0</div>
+    <button class="confirm-btn" id="confirmBtn">Confirm</button>
+  </div>
+
+  <script>
+    const cartBtn = document.getElementById("cartBtn");
+    const cart = document.getElementById("cart");
+    const closeCart = document.getElementById("closeCart");
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+
+    let cartData = JSON.parse(localStorage.getItem("ecoCart")) || [];
+
+    function updateCart() {
+      cartItems.innerHTML = "";
+      let total = 0;
+      cartData.forEach((item, index) => {
+        total += item.price;
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <span>${item.name}</span>
+            <span>₹${item.price}</span>
+            <button class="remove-btn" onclick="removeItem(${index})">✖</button>
+          </div>
+        `;
+      });
+      cartTotal.textContent = "Total: ₹" + total;
+      localStorage.setItem("ecoCart", JSON.stringify(cartData));
+    }
+
+    function removeItem(index) {
+      cartData.splice(index, 1);
+      updateCart();
+    }
+
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const name = btn.getAttribute("data-name");
+        const price = parseInt(btn.getAttribute("data-price"));
+        cartData.push({ name, price });
+        updateCart();
+      });
+    });
+
+    cartBtn.addEventListener("click", () => cart.classList.add("open"));
+    closeCart.addEventListener("click", () => cart.classList.remove("open"));
+
+    updateCart();
+    document.getElementById("confirmBtn").addEventListener("click", () => {
+  if (cartData.length === 0) {
+    alert("Please add at least one item before confirming!");
+    return;
+  }
+  window.location.href = "confirm1.html";
+});
+
+  </script>
+</body>
+
+</html>
+
