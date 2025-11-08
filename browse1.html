@@ -8,18 +8,28 @@
   <script src="api.js?v=1"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-  :root {
-  --bg: #000000;            /* black background */
-  --primary: #0a0a0a;       /* dark grayish black for sections */
-  --accent: #00ffff;        /* neon cyan */
-  --text: #e0e0e0;          /* light gray text */
-  --subtext: #9c9c9c;       /* muted gray */
-  --hover: #00ff9c;         /* neon green hover */
-  --highlight: #ff003c;     /* bright red button */
-  --purple: #9d00ff;        /* neon purple accent */
+:root {
+  --bg: linear-gradient(135deg, #CDEEDC, #D7EFFE); /* pastel green → blue gradient */
+
+  --primary: #FFFFFF;       
+  --accent: #A3D8B5;        
+  --accent-dark: #8BC9A3;   
+  
+  --pink: #F6AFC1;          
+  --yellow: #FFF6D4;        
+  --blue: #D7EFFE;          
+
+  --text: #2F4632;          
+  --subtext: #5C5C5C;       
+
+  --purple: #F6AFC1;        
+}
+html {
+  scroll-behavior: smooth;
 }
 
-/* Global Reset */
+
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -28,13 +38,13 @@
 }
 
 body {
-  background-color: var(--bg);
+  background: var(--bg);
   color: var(--text);
   line-height: 1.6;
   padding-top: 70px;
 }
 
-/* Navbar */
+/* NAVBAR */
 .navbar {
   position: fixed;
   top: 0;
@@ -44,49 +54,47 @@ body {
   align-items: center;
   background-color: var(--primary);
   padding: 1rem 2rem;
-  border-bottom: 1px solid var(--accent);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+  border-bottom: 2px solid var(--accent);
+  box-shadow: 0 4px 10px rgba(163,216,181,0.3);
   z-index: 1000;
 }
 
 .logo {
   font-size: 1.6rem;
   font-weight: bold;
-  color: var(--accent);
-  text-shadow: 0 0 8px var(--accent);
+  color: var(--text);
 }
 
+/* NAVIGATION LINKS */
 .nav-links a {
   color: var(--text);
   text-decoration: none;
   margin: 0 1rem;
-  transition: color 0.3s, text-shadow 0.3s;
+  transition: color 0.3s;
 }
 
 .nav-links a:hover {
-  color: var(--hover);
-  text-shadow: 0 0 8px var(--hover);
+  color: var(--accent-dark);
 }
 
-/* Buttons */
+/* BUTTONS */
 .btn {
-  background-color: var(--highlight);
-  color: #fff;
+  background-color: var(--pink);
+  color: var(--text);
   padding: 8px 18px;
   border-radius: 8px;
   transition: 0.3s;
   border: none;
   cursor: pointer;
-  box-shadow: 0 0 15px rgba(255, 0, 60, 0.5);
+  box-shadow: 0 4px 12px rgba(246,175,193,0.4);
 }
 
 .btn:hover {
-  background-color: #d90034;
+  background-color: #E79BB0;
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255, 0, 60, 0.8);
 }
 
-/* Browse Section */
+/* BROWSE SECTION */
 .browse-section {
   padding: 60px 10%;
   text-align: center;
@@ -94,37 +102,34 @@ body {
 
 .browse-section h2 {
   font-size: 2rem;
-  color: var(--purple);
-  margin-bottom: 2rem;
-  text-shadow: 0 0 12px rgba(157, 0, 255, 0.6);
+  color: var(--text);
 }
 
-/* Items Grid */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
 }
 
+/* ITEM CARD */
 .item-card {
-  background-color: #0f0f0f;
+  background-color: var(--primary);
   padding: 20px;
   border-radius: 15px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 0 10px rgba(0,255,156,0.15);
+  border: 2px solid var(--accent);
+  transition: transform 0.3s;
+  box-shadow: 0 6px 16px rgba(163,216,181,0.25);
 }
 
 .item-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 25px rgba(0,255,156,0.5);
-  border-color: var(--hover);
+  border-color: var(--accent-dark);
 }
 
 .item-card h3 {
   margin-bottom: 10px;
-  color: var(--hover);
-  text-shadow: 0 0 6px rgba(0,255,156,0.4);
+  color: var(--text);
 }
 
 .item-card p {
@@ -133,119 +138,22 @@ body {
 }
 
 .item-card button {
-  background-color: var(--accent);
-  color: #000;
+  background-color: var(--pink);
+  color: var(--text);
   border: none;
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 4px 10px rgba(246,175,193,0.4);
 }
 
 .item-card button:hover {
-  background-color: var(--hover);
+  background-color: #E79BB0;
   transform: scale(1.05);
 }
 
-/* Cart Sidebar */
-.cart {
-  position: fixed;
-  right: -350px;
-  top: 0;
-  height: 100%;
-  width: 350px;
-  background-color: #111;
-  color: var(--text);
-  padding: 20px;
-  transition: 0.4s ease;
-  z-index: 200;
-  overflow-y: auto;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  box-shadow: -5px 0 25px rgba(0, 255, 255, 0.2);
-  border-left: 2px solid var(--accent);
-}
-
-.cart.open {
-  right: 0;
-}
-
-.cart h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: var(--accent);
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 10px;
-}
-
-.remove-btn {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: color 0.3s, transform 0.3s;
-}
-
-.remove-btn:hover {
-  color: var(--highlight);
-  transform: scale(1.2);
-}
-
-.cart-total {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 1.1rem;
-  color: var(--hover);
-  text-shadow: 0 0 6px rgba(0,255,156,0.5);
-}
-
-/* Close Cart */
-.close-cart {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: 1.3rem;
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.close-cart:hover {
-  color: var(--highlight);
-}
-
-/* Confirm Button */
-.confirm-btn {
-  display: block;
-  margin: 20px auto 10px;
-  background-color: var(--highlight);
-  color: #fff;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(255,0,60,0.5);
-}
-
-.confirm-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255,0,60,0.8);
-  background-color: #d90034;
-}
+/* PRODUCT IMAGES */
 .item-card img {
   width: 100%;
   height: 160px;
@@ -259,7 +167,97 @@ body {
   transform: scale(1.05);
 }
 
+/* CART SIDEBAR */
+.cart {
+  position: fixed;
+  right: -350px;
+  top: 0;
+  height: 100%;
+  width: 350px;
+  background-color: #FFFFFF;
+  color: var(--text);
+  padding: 20px;
+  transition: 0.4s ease;
+  z-index: 200;
+  overflow-y: auto;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-left: 3px solid var(--accent);
+  box-shadow: -8px 0 20px rgba(163,216,181,0.3);
+}
 
+.cart.open {
+  right: 0;
+}
+
+.cart h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--pink);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.remove-btn:hover {
+  color: #E79BB0;
+}
+
+/* TOTAL */
+.cart-total {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+/* CLOSE CART */
+.close-cart {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1.3rem;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  cursor: pointer;
+}
+
+/* CONFIRM BUTTON */
+.confirm-btn {
+  display: block;
+  margin: 20px auto 10px;
+  background-color: var(--pink);
+  color: var(--text);
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 14px rgba(246,175,193,0.4);
+}
+
+.confirm-btn:hover {
+  transform: scale(1.05);
+  background-color: #E79BB0;
+}
   </style>
 </head>
 <body>
@@ -302,9 +300,6 @@ body {
         <img src="wrapper.jpg" alt="Notebooks">
         <h3>Plastic Wrappers</h3><p>₹0.2</p><button class="add-to-cart" data-name="Plastic Wrappers" data-price="3">Add</button></div>
       <div class="item-card">
-        <img src="ewaste.jpg" alt="Notebooks">
-        <h3>E-Waste</h3><p>₹10</p><button class="add-to-cart" data-name="E-Waste" data-price="20">Add</button></div>
-      <div class="item-card">
         <img src="cans.jpg" alt="Notebooks">
         <h3>Aluminum Cans</h3><p>₹3</p><button class="add-to-cart" data-name="Aluminum Cans" data-price="7">Add</button></div>
       <div class="item-card">
@@ -312,6 +307,63 @@ body {
         <h3>Empty Sachets</h3><p>₹0.5</p><button class="add-to-cart" data-name="Sachets" data-price="7">Add</button></div>
     </div>
   </section>
+  <!-- E-WASTE SECTION -->
+<section id="ewaste-section" class="browse-section">
+  <h2>E-Waste Categories</h2>
+
+  <div class="grid">
+
+    <div class="item-card">
+      <img src="ew_keyboard.jpg" alt="Keyboard">
+      <h3>Keyboards</h3>
+      <p>₹15</p>
+      <button class="add-to-cart" data-name="Keyboard" data-price="15">Add</button>
+    </div>
+
+    <div class="item-card">
+      <img src="ew_camera.jpg" alt="Camera">
+      <h3>Camera</h3>
+      <p>₹20</p>
+      <button class="add-to-cart" data-name="Camera" data-price="20">Add</button>
+    </div>
+
+    <div class="item-card">
+      <img src="ew_laptop.jpg" alt="Laptop">
+      <h3>Laptop</h3>
+      <p>₹35</p>
+      <button class="add-to-cart" data-name="Laptop" data-price="35">Add</button>
+    </div>
+
+    <div class="item-card">
+      <img src="ew_phone.jpg" alt="Phone">
+      <h3>Phone</h3>
+      <p>₹25</p>
+      <button class="add-to-cart" data-name="Phone" data-price="25">Add</button>
+    </div>
+
+    <div class="item-card">
+      <img src="ew_calculator.jpg" alt="Calculator">
+      <h3>Calculator</h3>
+      <p>₹8</p>
+      <button class="add-to-cart" data-name="Calculator" data-price="8">Add</button>
+    </div>
+
+    <div class="item-card">
+      <img src="ew_earphones.jpg" alt="Earphones">
+      <h3>Earphones</h3>
+      <p>₹10</p>
+      <button class="add-to-cart" data-name="Earphones" data-price="10">Add</button>
+    </div>
+
+    <div class="item-card">
+      <img src="ew_circuit.jpg" alt="Circuit Elements">
+      <h3>Circuit Elements</h3>
+      <p>₹12</p>
+      <button class="add-to-cart" data-name="Circuit Elements" data-price="12">Add</button>
+    </div>
+
+  </div>
+</section>
 
   <!-- Cart Sidebar -->
   <div class="cart" id="cart">
@@ -379,6 +431,7 @@ body {
 </body>
 
 </html>
+
 
 
 
