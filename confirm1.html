@@ -7,78 +7,103 @@
   <script src="config.js?v=1"></script>
   <script src="api.js?v=1"></script>
   <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
+   body {
+  background: linear-gradient(135deg, #CDEEDC, #D7EFFE); /* pastel green → pastel blue */
+  color: #2F4632;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
 
-    h1 {
-      color: #00ffff;
-      text-shadow: 0 0 15px #00ffff;
-    }
+/* Heading */
+h1 {
+  color: #2F4632;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
 
-    .container {
-      background: rgba(20, 20, 20, 0.9);
-      border: 1px solid #00ff99;
-      box-shadow: 0 0 20px #00ff99;
-      border-radius: 12px;
-      padding: 40px;
-      width: 340px;
-      text-align: center;
-    }
+/* Main container */
+.container {
+  background: #FFFFFF;
+  border: 2px solid #A3D8B5;       /* pastel-green border */
+  border-radius: 14px;
+  padding: 40px;
+  width: 340px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(163, 216, 181, 0.4); /* soft pastel shadow */
+}
 
-    #qrcode {
-      margin: 20px auto;
-      padding: 10px;
-      background: #111;
-      border-radius: 8px;
-      box-shadow: 0 0 20px #7f00ff;
-    }
+#qrcode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    input {
-      width: 90%;
-      padding: 10px;
-      margin-top: 15px;
-      border: none;
-      border-radius: 6px;
-      background: #222;
-      color: #0f0;
-      font-size: 1rem;
-      text-align: center;
-      box-shadow: 0 0 10px #00ff99;
-    }
+  margin: 20px auto;
+  padding: 14px;
 
-    button {
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #ff0033;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 15px #ff0033;
-    }
+  background: #FCE0E9;        /* pastel pink */
+  border: 3px solid #A3D8B5;  /* pastel green border */
 
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 25px #ff0033;
-    }
+  border-radius: 12px;
+  width: fit-content;
+  height: fit-content;
 
-    p {
-      color: #888;
-      margin-top: 10px;
-      font-size: 0.9rem;
-    }
+  box-shadow: 0 4px 14px rgba(246,175,193,0.4); /* soft pastel shadow */
+}
+
+
+/* Input */
+input {
+  width: 90%;
+  padding: 10px;
+  margin-top: 15px;
+  border: 2px solid #CDEEDC;      /* pastel border */
+  border-radius: 8px;
+  background: #F5FFF5;            /* very light pastel green */
+  color: #2F4632;
+  font-size: 1rem;
+  text-align: center;
+  transition: 0.25s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #A3D8B5;
+  background: #EAF8EF;            /* slightly richer pastel */
+}
+
+/* Button */
+button {
+  margin-top: 20px;
+  padding: 12px 25px;
+
+  background: #F6AFC1;           /* pastel pink */
+  border: none;
+  border-radius: 10px;
+  color: #2F4632;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  box-shadow: 0 4px 14px rgba(246, 175, 193, 0.4); /* soft pastel pink shadow */
+}
+
+button:hover {
+  background: #E79BB0;           /* deeper pastel pink on hover */
+  transform: scale(1.04);
+}
+
+/* Paragraph */
+p {
+  color: #5C5C5C;
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
   </style>
 </head>
 <body>
@@ -104,8 +129,8 @@
         text: randomData,
         width: 150,
         height: 150,
-        colorDark: "#00ffff",
-        colorLight: "#000000",
+        colorDark: "#2F4632",   // FIXED: pastel dark green
+        colorLight: "#FCE0E9",  // FIXED: pastel soft pink
       });
     }
 
@@ -129,6 +154,7 @@
 </body>
 
 </html>
+
 
 
 
