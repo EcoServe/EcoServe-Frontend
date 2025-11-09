@@ -4,106 +4,116 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Confirmation | EcoServe</title>
+
+  <!-- your existing global config + api (keep order) -->
   <script src="config.js?v=1"></script>
   <script src="api.js?v=1"></script>
+
   <style>
    body {
-  background: linear-gradient(135deg, #CDEEDC, #D7EFFE); /* pastel green → pastel blue */
-  color: #2F4632;
-  font-family: 'Poppins', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-}
+    background: linear-gradient(135deg, #CDEEDC, #D7EFFE); /* pastel green → pastel blue */
+    color: #2F4632;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
 
-/* Heading */
-h1 {
-  color: #2F4632;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
+  /* Heading */
+  h1 {
+    color: #2F4632;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
 
-/* Main container */
-.container {
-  background: #FFFFFF;
-  border: 2px solid #A3D8B5;       /* pastel-green border */
-  border-radius: 14px;
-  padding: 40px;
-  width: 340px;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(163, 216, 181, 0.4); /* soft pastel shadow */
-}
+  /* Main container */
+  .container {
+    background: #FFFFFF;
+    border: 2px solid #A3D8B5;       /* pastel-green border */
+    border-radius: 14px;
+    padding: 40px;
+    width: 340px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(163, 216, 181, 0.4); /* soft pastel shadow */
+  }
 
-#qrcode {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  #qrcode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  margin: 20px auto;
-  padding: 14px;
+    margin: 20px auto;
+    padding: 14px;
 
-  background: #FCE0E9;        /* pastel pink */
-  border: 3px solid #A3D8B5;  /* pastel green border */
+    background: #FCE0E9;        /* pastel pink */
+    border: 3px solid #A3D8B5;  /* pastel green border */
 
-  border-radius: 12px;
-  width: fit-content;
-  height: fit-content;
+    border-radius: 12px;
+    width: fit-content;
+    height: fit-content;
 
-  box-shadow: 0 4px 14px rgba(246,175,193,0.4); /* soft pastel shadow */
-}
+    box-shadow: 0 4px 14px rgba(246,175,193,0.4); /* soft pastel shadow */
+  }
 
+  /* Input */
+  input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 15px;
+    border: 2px solid #CDEEDC;      /* pastel border */
+    border-radius: 8px;
+    background: #F5FFF5;            /* very light pastel green */
+    color: #2F4632;
+    font-size: 1rem;
+    text-align: center;
+    transition: 0.25s ease;
+  }
 
-/* Input */
-input {
-  width: 90%;
-  padding: 10px;
-  margin-top: 15px;
-  border: 2px solid #CDEEDC;      /* pastel border */
-  border-radius: 8px;
-  background: #F5FFF5;            /* very light pastel green */
-  color: #2F4632;
-  font-size: 1rem;
-  text-align: center;
-  transition: 0.25s ease;
-}
+  input:focus {
+    outline: none;
+    border-color: #A3D8B5;
+    background: #EAF8EF;            /* slightly richer pastel */
+  }
 
-input:focus {
-  outline: none;
-  border-color: #A3D8B5;
-  background: #EAF8EF;            /* slightly richer pastel */
-}
+  /* Button */
+  button {
+    margin-top: 20px;
+    padding: 12px 25px;
 
-/* Button */
-button {
-  margin-top: 20px;
-  padding: 12px 25px;
+    background: #F6AFC1;           /* pastel pink */
+    border: none;
+    border-radius: 10px;
+    color: #2F4632;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
 
-  background: #F6AFC1;           /* pastel pink */
-  border: none;
-  border-radius: 10px;
-  color: #2F4632;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s ease;
+    box-shadow: 0 4px 14px rgba(246, 175, 193, 0.4); /* soft pastel pink shadow */
+  }
 
-  box-shadow: 0 4px 14px rgba(246, 175, 193, 0.4); /* soft pastel pink shadow */
-}
+  button:hover {
+    background: #E79BB0;           /* deeper pastel pink on hover */
+    transform: scale(1.04);
+  }
 
-button:hover {
-  background: #E79BB0;           /* deeper pastel pink on hover */
-  transform: scale(1.04);
-}
+  /* Paragraph */
+  p {
+    color: #5C5C5C;
+    margin-top: 12px;
+    font-size: 0.9rem;
+  }
 
-/* Paragraph */
-p {
-  color: #5C5C5C;
-  margin-top: 12px;
-  font-size: 0.9rem;
-}
+  /* inline status message */
+  #status {
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+  #status.ok { color: #1f7a2e; }
+  #status.err { color: #b42318; }
   </style>
 </head>
 <body>
@@ -114,48 +124,95 @@ p {
     <p>This QR updates automatically every 24 hours</p>
 
     <input type="tel" id="phone" placeholder="Enter your phone number" maxlength="10">
-    <button id="confirmBtn">Confirm </button>
+    <button id="confirmBtn">Confirm</button>
+    <div id="status"></div>
   </div>
 
   <!-- QRCode library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
   <script>
-    // Function to generate a unique QR code that changes every hour
-    function generateQRCode() {
-      const currentHour = new Date().getHours();
-      const randomData = "recycle-" + currentHour + "-" + Math.random().toString(36).substring(2, 10);
-      document.getElementById("qrcode").innerHTML = "";
-      new QRCode(document.getElementById("qrcode"), {
-        text: randomData,
-        width: 150,
-        height: 150,
-        colorDark: "#2F4632",   // FIXED: pastel dark green
-        colorLight: "#FCE0E9",  // FIXED: pastel soft pink
-      });
+    // --- fallback if config.js isn't present for some reason ---
+    if (!window.API_BASE) {
+      window.API_BASE = "https://ecoserve-backend.onrender.com";
     }
 
-    // Generate QR initially
+    // --- generate & keep latest QR text so we can send it with the request ---
+    let lastQRText = "";
+    function generateQRCode() {
+      const currentHour = new Date().getHours();
+      lastQRText = "recycle-" + currentHour + "-" + Math.random().toString(36).substring(2, 10);
+
+      const el = document.getElementById("qrcode");
+      el.innerHTML = "";
+      new QRCode(el, {
+        text: lastQRText,
+        width: 150,
+        height: 150,
+        colorDark: "#2F4632",   // pastel dark green
+        colorLight: "#FCE0E9",  // pastel soft pink
+      });
+    }
     generateQRCode();
+    setInterval(generateQRCode, 3600000); // refresh every hour
 
-    // Refresh QR code every hour (3600000 ms)
-    setInterval(generateQRCode, 3600000);
+    // --- helper: minimal fetch wrapper (uses cookies for session if present) ---
+    async function api(path, { method = "GET", body = null, headers = {} } = {}) {
+      const res = await fetch(`${window.API_BASE}${path}`, {
+        method,
+        credentials: "include",
+        headers: { "Content-Type": "application/json", ...headers },
+        body: body ? JSON.stringify(body) : null
+      });
+      const txt = await res.text();
+      if (!res.ok) throw new Error(txt || `HTTP ${res.status}`);
+      try { return JSON.parse(txt); } catch { return txt; }
+    }
 
-    // Confirm button logic
-    document.getElementById("confirmBtn").addEventListener("click", () => {
-      const phone = document.getElementById("phone").value.trim();
-      if (phone === "" || phone.length < 10) {
-        alert("Please enter a valid phone number!");
+    // --- confirm button wiring (minimal changes to your UI) ---
+    document.getElementById("confirmBtn").addEventListener("click", async () => {
+      const status = document.getElementById("status");
+      status.textContent = ""; status.className = "";
+
+      const phone = (document.getElementById("phone").value || "").trim();
+      if (!/^\d{10}$/.test(phone)) {
+        status.textContent = "Please enter a valid 10-digit phone number.";
+        status.className = "err";
         return;
       }
-      alert("✅ Confirmation successful" );
+
+      // For now: item_type_id = 1 (Notebook), qty = 1.
+      // Adjust when you add more item types or expose a selector.
+      const payload = {
+        item_type_id: 1,
+        qty: 1,
+        phone: phone,
+        qr_token: lastQRText
+      };
+
+      try {
+        const out = await api("/api/deposits", { method: "POST", body: payload });
+        status.textContent = "✅ Confirmation successful! Deposit ID: " + out.id;
+        status.className = "ok";
+        // optional: reset + rotate QR
+        document.getElementById("phone").value = "";
+        generateQRCode();
+      } catch (e) {
+        console.error("Deposit failed:", e);
+        status.textContent = "❌ Error: " + e.message;
+        status.className = "err";
+      }
     });
+
+    // (Optional) quick diagnostics in console
+    (async () => {
+      try {
+        console.log("[EcoServe] health:", await api("/healthz"));
+        console.log("[EcoServe] db:", await api("/dbcheck"));
+      } catch (e) { console.warn("[EcoServe] API diag failed:", e.message); }
+    })();
   </script>
-<script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
+
+  <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
 </body>
-
 </html>
-
-
-
-
-
