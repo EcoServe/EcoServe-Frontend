@@ -190,14 +190,14 @@
 
       // Backend requires: user_id, item_type_id, qty, drop_box_id
       const payload = {
-        user_id: DEFAULT_USER_ID,
-        item_type_id: DEFAULT_ITEM_TYPEID,
-        qty: 1,
-        drop_box_id: DEFAULT_DROP_BOX_ID,
-        // optional extras if you log them server-side:
-        phone: phone,
-        qr_token: lastQRText
-      };
+  user_id: 1,
+  item_type_id: 1,
+  qty: 1,
+  drop_box_id: 1,
+  phone: phone,        // optional
+  qr_token: lastQRText // optional
+};
+await api("/api/deposits", { method: "POST", body: payload });
 
       try {
         const out = await api("/api/deposits", { method: "POST", body: payload });
@@ -217,3 +217,4 @@
   <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
 </body>
 </html>
+
