@@ -3,11 +3,11 @@ const API_BASE =
   (typeof window !== "undefined" && window.API_BASE) ||
   "https://ecoserve-backend.onrender.com"; // fallback
 
-// Core request wrapper
+// Generic API request
 async function api(path, { method = "GET", body = null, headers = {} } = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
     method,
-    credentials: "include",                        // keep for cookies/session
+    credentials: "include",
     headers: { "Content-Type": "application/json", ...headers },
     body: body ? JSON.stringify(body) : null,
   });
@@ -17,42 +17,45 @@ async function api(path, { method = "GET", body = null, headers = {} } = {}) {
   try { return JSON.parse(text); } catch { return text; }
 }
 
-// Specific endpoints
+// --- Auth & main endpoints ---
 async function requestOtp(email) {
   return api("/api/auth/otp", { method: "POST", body: { email } });
 }
-
 async function verifyOtp(email, code) {
   return api("/api/auth/verify", { method: "POST", body: { email, code } });
 }
-
 async function createDeposit(user_id, item_type_id, qty) {
   return api("/api/deposits", {
     method: "POST",
     body: { user_id, item_type_id, qty },
   });
 }
-
 async function loadRewards() {
   return api("/api/rewards/list");
 }
 
-// Basic diagnostics
+// --- Add this missing one ---
+async function createItemType(payload) {
+  return api("/api/item-types", { method: "POST", body: payload });
+}
+
+// --- Diagnostics ---
 async function health() { return api("/healthz"); }
 async function dbcheck() { return api("/dbcheck"); }
 
-// Expose globally so you can call ecoserveAPI.* in console or other scripts
+// Expose globally
 window.ecoserveAPI = {
   api,
   requestOtp,
   verifyOtp,
   createDeposit,
   loadRewards,
+  createItemType,  // ✅ now available
   health,
   dbcheck,
 };
 
-// Auto-test connection on load
+// Auto-test on load
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     console.log("[EcoServe] health:", await health());
