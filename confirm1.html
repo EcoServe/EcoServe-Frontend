@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Confirmation | EcoServe</title>
 
-  <!-- your existing global config + api (keep order) -->
+  <!-- Global config + API; keep this order -->
   <script src="config.js?v=1"></script>
   <script src="api.js?v=1"></script>
 
@@ -22,14 +22,12 @@
     margin: 0;
   }
 
-  /* Heading */
   h1 {
     color: #2F4632;
     margin-bottom: 20px;
     font-weight: 700;
   }
 
-  /* Main container */
   .container {
     background: #FFFFFF;
     border: 2px solid #A3D8B5;       /* pastel-green border */
@@ -58,7 +56,6 @@
     box-shadow: 0 4px 14px rgba(246,175,193,0.4); /* soft pastel shadow */
   }
 
-  /* Input */
   input {
     width: 90%;
     padding: 10px;
@@ -78,7 +75,6 @@
     background: #EAF8EF;            /* slightly richer pastel */
   }
 
-  /* Button */
   button {
     margin-top: 20px;
     padding: 12px 25px;
@@ -100,14 +96,12 @@
     transform: scale(1.04);
   }
 
-  /* Paragraph */
   p {
     color: #5C5C5C;
     margin-top: 12px;
     font-size: 0.9rem;
   }
 
-  /* inline status message */
   #status {
     margin-top: 10px;
     font-size: 0.95rem;
@@ -132,12 +126,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <script>
-    // --- fallback if config.js isn't present for some reason ---
+    // ----------- CONFIG (edit these IDs to match your DB) -----------
+    const DEFAULT_USER_ID     = 1; // TEMP for testing; backend can infer from session later
+    const DEFAULT_ITEM_TYPEID = 1; // 'Notebook' in your DB right now
+    const DEFAULT_DROP_BOX_ID = 1; // pick a valid drop_boxes.id
+
+    // Fallback API base if config.js wasn't loaded
     if (!window.API_BASE) {
       window.API_BASE = "https://ecoserve-backend.onrender.com";
     }
 
-    // --- generate & keep latest QR text so we can send it with the request ---
+    // ----------- QR generation (keeps latest text in lastQRText) -----------
     let lastQRText = "";
     function generateQRCode() {
       const currentHour = new Date().getHours();
@@ -149,14 +148,14 @@
         text: lastQRText,
         width: 150,
         height: 150,
-        colorDark: "#2F4632",   // pastel dark green
-        colorLight: "#FCE0E9",  // pastel soft pink
+        colorDark: "#2F4632",
+        colorLight: "#FCE0E9",
       });
     }
     generateQRCode();
     setInterval(generateQRCode, 3600000); // refresh every hour
 
-    // --- helper: minimal fetch wrapper (uses cookies for session if present) ---
+    // ----------- minimal API wrapper (includes cookies for session) -----------
     async function api(path, { method = "GET", body = null, headers = {} } = {}) {
       const res = await fetch(`${window.API_BASE}${path}`, {
         method,
@@ -169,7 +168,15 @@
       try { return JSON.parse(txt); } catch { return txt; }
     }
 
-    // --- confirm button wiring (minimal changes to your UI) ---
+    // ----------- diagnostics (optional) -----------
+    (async () => {
+      try {
+        console.log("[EcoServe] health:", await api("/healthz"));
+        console.log("[EcoServe] db:", await api("/dbcheck"));
+      } catch (e) { console.warn("[EcoServe] API diag failed:", e.message); }
+    })();
+
+    // ----------- confirm button logic -----------
     document.getElementById("confirmBtn").addEventListener("click", async () => {
       const status = document.getElementById("status");
       status.textContent = ""; status.className = "";
@@ -181,11 +188,13 @@
         return;
       }
 
-      // For now: item_type_id = 1 (Notebook), qty = 1.
-      // Adjust when you add more item types or expose a selector.
+      // Backend requires: user_id, item_type_id, qty, drop_box_id
       const payload = {
-        item_type_id: 1,
+        user_id: DEFAULT_USER_ID,
+        item_type_id: DEFAULT_ITEM_TYPEID,
         qty: 1,
+        drop_box_id: DEFAULT_DROP_BOX_ID,
+        // optional extras if you log them server-side:
         phone: phone,
         qr_token: lastQRText
       };
@@ -194,7 +203,6 @@
         const out = await api("/api/deposits", { method: "POST", body: payload });
         status.textContent = "✅ Confirmation successful! Deposit ID: " + out.id;
         status.className = "ok";
-        // optional: reset + rotate QR
         document.getElementById("phone").value = "";
         generateQRCode();
       } catch (e) {
@@ -203,16 +211,9 @@
         status.className = "err";
       }
     });
-
-    // (Optional) quick diagnostics in console
-    (async () => {
-      try {
-        console.log("[EcoServe] health:", await api("/healthz"));
-        console.log("[EcoServe] db:", await api("/dbcheck"));
-      } catch (e) { console.warn("[EcoServe] API diag failed:", e.message); }
-    })();
   </script>
 
+  <!-- Optional Vercel analytics -->
   <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
 </body>
 </html>
