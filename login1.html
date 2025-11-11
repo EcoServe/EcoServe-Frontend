@@ -125,48 +125,6 @@ p {
   <p>Your data is safe with us 🔒</p>
 </div>
 
-<script>
-  document.getElementById("loginBtn").addEventListener("click", () => {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-
-    if (name === "" || email === "" || phone.length < 10) {
-      alert("⚠️ Please fill in all fields correctly!");
-      return;
-    }
-
-    // Save user details for later use (optional)
-    localStorage.setItem("userName", name);
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userPhone", phone);
-
-    // Redirect to browse page
-    window.location.href = "browse1.html";
-  });
-</script>
-
-<script>
-  document.getElementById("loginBtn").addEventListener("click", () => {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-
-    if (name === "" || email === "" || phone.length < 10) {
-      alert("⚠️ Please fill in all fields correctly!");
-      return;
-    }
-
-    // Save user details for later use (optional)
-    localStorage.setItem("userName", name);
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userPhone", phone);
-
-    // Redirect to browse page
-    window.location.href = "browse1.html";
-  });
-</script>
-
  
   <script>
     document.getElementById("loginBtn").addEventListener("click", () => {
@@ -191,6 +149,7 @@ p {
 <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
 </body>
 </html>
+
 
 
 
