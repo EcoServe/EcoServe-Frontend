@@ -115,7 +115,7 @@
   <div class="container">
     <h1>Confirm Your Recycling</h1>
     <div id="qrcode"></div>
-    <p>This QR updates automatically every 24 hours</p>
+    <p>This QR updates automatically every hour</p>
 
     <input type="tel" id="phone" placeholder="Enter your phone number" maxlength="10">
     <button id="confirmBtn">Confirm</button>
@@ -217,5 +217,6 @@ await api("/api/deposits", { method: "POST", body: payload });
   <script defer src="https://cdn.vercel-insights.com/v1/script.debug.js"></script>
 </body>
 </html>
+
 
 
